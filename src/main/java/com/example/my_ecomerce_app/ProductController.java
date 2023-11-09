@@ -71,6 +71,13 @@ public class ProductController {
         return "admin/productview";
         }
 
+        @GetMapping("delete/{id}")
+    public String deleteProduct(@PathVariable Long id){
+
+        productRepository.deleteById(id);
+        return "redirect:/products";
+        }
+
 
 
 
