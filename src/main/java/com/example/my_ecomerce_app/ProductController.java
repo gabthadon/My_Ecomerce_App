@@ -1,6 +1,5 @@
 package com.example.my_ecomerce_app;
 
-import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -8,12 +7,9 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.UUID;
 import java.nio.file.Paths;
 
 
@@ -27,12 +23,14 @@ public class ProductController {
         this.productRepository = productRepository;
     }
 
+    //Display Form to upload Products
     @GetMapping("/addproduct")
     public String getAddProduct() {
         return "admin/addproduct";
     }
 
 
+    //Upload Product with image and submit to database
     @PostMapping("/putproduct")
     public String addProduct(@RequestParam("image") MultipartFile image, @RequestParam("name") String name, @RequestParam("description") String description, @RequestParam("rating") Integer rating) {
 
@@ -60,15 +58,18 @@ public class ProductController {
             throw new RuntimeException(e.getMessage());
         }
 
-
-
-
-
-
         return "shop";
 
-
     }
+
+
+    //View All Products From Admin Panel
+    @GetMapping("/products")
+        public String getProducts(Model model){
+       model.addAttribute("product", productRepository.findAll());
+
+        return "admin/productview";
+        }
 
 
 
