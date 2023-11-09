@@ -36,11 +36,22 @@ public class ProductController {
     @PostMapping("/putproduct")
     public String addProduct(@RequestParam("image") MultipartFile image, @RequestParam("name") String name, @RequestParam("description") String description, @RequestParam("rating") Integer rating) {
 
-       // String imageUrl = StringUtils.cleanPath(image.getOriginalFilename()) ;
-
+        String imageUrl = StringUtils.cleanPath(image.getOriginalFilename()) ;
+ String imagePath = "uploads/"+imageUrl;
 
         try {
             Files.copy(image.getInputStream(), this.root.resolve(image.getOriginalFilename()));
+
+            //Save to Database
+            Product product = Product.builder()
+                    .image(imagePath)
+                    .name(name)
+                    .description(description)
+                    .rating(rating)
+                    .build();
+
+            productRepository.save(product);
+
         } catch (Exception e) {
             if (e instanceof FileAlreadyExistsException ) {
                 throw new RuntimeException("A file of that name already exists.");
@@ -50,18 +61,9 @@ public class ProductController {
         }
 
 
-/*
-        Product product = Product.builder()
-                .image(imageUrl)
-                .name(name)
-                .description(description)
-                .rating(rating)
-                .build();
-
-        productRepository.save(product);
 
 
- */
+
 
         return "shop";
 
