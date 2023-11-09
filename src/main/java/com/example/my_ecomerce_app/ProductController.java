@@ -21,7 +21,7 @@ import java.nio.file.Paths;
 public class ProductController {
 
     private final ProductRepository productRepository;
-    private final Path root = Paths.get("uploads");
+    private final Path root = Paths.get("src/main/resources/static/uploads");
     @Autowired
     public ProductController(ProductRepository productRepository) {
         this.productRepository = productRepository;
