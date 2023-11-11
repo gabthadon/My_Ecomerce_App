@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>View All Products</title>
     <link rel="stylesheet" href="css/bootstrap.css">
     <style>
         .mytable{
@@ -31,6 +31,7 @@
                 <th scope="col">NAME</th>
                 <th scope="col">DESCRIPTION</th>
                 <th scope="col">RATING</th>
+                <th scope="col">IMAGE</th>
                 <th scope="col">EDIT</th>
                 <th scope="col">Delete</th>
 
@@ -41,7 +42,9 @@
                 <td th:text="${list.name}"></td>
                 <td th:text="${list.description}"></td>
                 <td th:text="${list.rating}"></td>
-<td> <button class="btn btn-info">Edit</button></td>
+                <td><img th:src="@{'uploads/' + '/' +  ${list.image}}" width="50px" height="50px"></td>
+<td><a th:href="@{'updateproduct/' + ${list.description} + '/' + ${list.name} + '/' + ${list.rating} + '/' + ${list.image} + '/' + ${list.id}}">
+    <button class="btn btn-info">Edit</button></a></td>
                 <td><a th:href="@{'delete/' + ${list.id}}"><button class="btn btn-danger">Delete</button></a></td>
             </tr>
             <tr>
